@@ -177,7 +177,7 @@ public:
         return append(v);
     }
 
-    ByteArray readBytes(size_t len, size_t offset = 0) {
+    ByteArray readBytes(size_t offset, size_t len) {
         return ByteArray(this->data() + offset, len);
     }
 
@@ -211,14 +211,14 @@ public:
     uint16_t readUint16(size_t offset = 0) {
         uint16_t result = *(uint16_t *) (this->data() + offset);
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            result = __builtin_bswap16(result);
+            result = _byteswap_ushort(result);
         }
         return result;
     }
 
     void writeUint16(uint16_t value) {
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            value = __builtin_bswap16(value);
+            value = _byteswap_ushort(value);
         }
         this->append((byte *) &value, sizeof(uint16_t));
     }
@@ -226,14 +226,14 @@ public:
     uint32_t readUint32(size_t offset = 0) {
         uint32_t result = *(uint32_t *) (this->data() + offset);
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            result = __builtin_bswap32(result);
+            result = _byteswap_ulong(result);
         }
         return result;
     }
 
     void writeUint32(uint32_t value) {
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            value = __builtin_bswap32(value);
+            value = _byteswap_ulong(value);
         }
         this->append((byte *) &value, sizeof(uint32_t));
     }
@@ -241,14 +241,14 @@ public:
     uint64_t readUint64(size_t offset = 0) {
         uint64_t result = *(uint64_t *) (this->data() + offset);
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            result = __builtin_bswap64(result);
+            result = _byteswap_uint64(result);
         }
         return result;
     }
 
     void writeUint64(uint64_t value) {
         if (this->endian != Endian::System && this->endian != this->getSystemEndian()) {
-            value = __builtin_bswap64(value);
+            value = _byteswap_uint64(value);
         }
         this->append((byte *) &value, sizeof(uint64_t));
     }
